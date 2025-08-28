@@ -5329,12 +5329,12 @@
                             ctx.clearRect(0, 0, w, h);
 
                             // ---------- Боковые неоновые панели ----------
-                            let panelWidth = w / 12;
-                            let neonColor = "hsla(" + this.hue + ", 90%, 50%, 0.9)";
+                            let panelWidth = w / 18; // чуть уже, чем было
+                            let neonColor = "hsla(" + this.hue + ", 90%, 60%, 0.9)";
 
                             ctx.fillStyle = neonColor;
                             ctx.shadowColor = neonColor;
-                            ctx.shadowBlur = 15;
+                            ctx.shadowBlur = 12;
 
                             // Левая панель
                             ctx.fillRect(0, 0, panelWidth, h);
@@ -5344,28 +5344,26 @@
 
                             ctx.shadowBlur = 0;
 
-                            // ---------- Прозрачный центр ----------
-                            ctx.fillStyle = "rgba(0,0,0,0.0)"; // полностью прозрачный
-                            ctx.fillRect(panelWidth, 0, w - 2*panelWidth, h);
-
                             // ---------- Основной текст HUD ----------
                             ctx.fillStyle = neonColor;
-                            ctx.font = `${Math.round(h/3)}pt Play`; // крупный неоновый текст
                             ctx.textAlign = "center";
                             ctx.textBaseline = "middle";
 
-                            // Игроки на сервере
-                            ctx.fillText(`${this.players} on ${this.data.name}`, w/2, h/3);
+                            // Верхний текст — "игроки на сервере"
+                            ctx.font = `${Math.round(h/4)}px Play`; 
+                            ctx.fillText(`${this.players} on ${this.data.name}`, w/2, h * 0.28);
 
-                            // Общее кол-во игроков
-                            if(this.IlI0l >= 100)
-                                ctx.fillText(`${this.IlI0l} total`, w/2, 2*h/3);
+                            // Средний текст — "total"
+                            ctx.font = `${Math.round(h/5.5)}px Play`; 
+                            ctx.fillText(`${this.IlI0l} total`, w/2, h * 0.55);
 
-                            // ---------- Справа: FPS и пинг ----------
-                            ctx.font = `${Math.round(h/5)}pt Play`; 
-                            ctx.fillText(`${this.fps} FPS | (${this.IOOl1.region}) ping ${this.ping} ms`, w/2, h - h/6);
+                            // Нижний текст — FPS + ping
+                            ctx.font = `${Math.round(h/6.5)}px Play`; 
+                            ctx.fillText(`${this.fps} FPS | ${this.IOOl1.region} | ${this.ping} ms`, w/2, h * 0.82);
+
                             // ---------- Обновление текстуры ----------
                             this.texture.needsUpdate = true;
+
                     }, t.prototype.O0IOl = function () {
                         var t, e;
                         if (!((e = Date.now()) < this.refresh_time)) return t = !1, this.IOOl1.display.fps !==
