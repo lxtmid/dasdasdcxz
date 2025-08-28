@@ -4668,72 +4668,15 @@
                             ctx.shadowBlur = 0;
 
                             // ---------------------------
-                            // Точка игрока (неоновая)
-                            ctx.fillStyle = "rgba(0,255,255,1)";
+                            // Точка игрока (локальный, неоновая)
+                            // ---------------------------
+                            ctx.fillStyle = "rgba(255,255,255,1)"; // белая как skeet.cc
                             ctx.shadowColor = "#00FFFF";
                             ctx.shadowBlur = 12;
                             ctx.beginPath();
                             ctx.arc(0, 0, 0.03, 0, Math.PI * 2);
                             ctx.fill();
                             ctx.shadowBlur = 0;
-
-                            // ---------------------------
-                            // Остальные игроки
-                            // ---------------------------
-                            if (this.view != null) {
-                                let u = 2;
-                                let m = Math.min(10, this.view.getUint8(1));
-
-                                ctx.font = "0.08px Arial";
-                                ctx.textAlign = "center";
-                                ctx.textBaseline = "bottom";
-
-                                for (let o = 0; o < m; o++) {
-                                    let id = this.view.getUint8(u);
-                                    let score = this.view.getUint32(u + 4, true) & 0xFFFFFF;
-                                    u += 8;
-
-                                    let name = (this.IOOl1 && this.IOOl1.names && this.IOOl1.names.get) ? this.IOOl1.names.get(id) || "Unknown" : "Unknown";
-
-                                    // Получаем позицию игрока
-                                    let playerX = 0, playerY = 0, hp = "??";
-                                    if (window.shipsArray) {
-                                        const ship = window.shipsArray.find(s => s.l10Il && s.l10Il.id === id);
-                                        if (ship) {
-                                            if (ship.O0OO1 && ship.O0OO1.position) {
-                                                playerX = ship.O0OO1.position.x;
-                                                playerY = ship.O0OO1.position.y;
-                                            }
-                                            hp = ship.hp || "??";
-                                        }
-                                    } else {
-                                        playerX = (Math.random() - 0.5) * 2;
-                                        playerY = (Math.random() - 0.5) * 2;
-                                    }
-
-                                    // ---------------------------
-                                    // Точка игрока с glow
-                                    // ---------------------------
-                                    let hue = o * 36;
-                                    ctx.fillStyle = `hsla(${hue},100%,70%,1)`;
-                                    ctx.shadowColor = `hsla(${hue},100%,70%,0.8)`;
-                                    ctx.shadowBlur = 8;
-                                    ctx.beginPath();
-                                    ctx.arc(playerX, playerY, 0.03, 0, Math.PI * 2);
-                                    ctx.fill();
-                                    ctx.shadowBlur = 0;
-
-                                    // ---------------------------
-                                    // Текст игрока с neon outline
-                                    // ---------------------------
-                                    ctx.fillStyle = "#00FFFF";
-                                    ctx.strokeStyle = "#FF00FF";
-                                    ctx.lineWidth = 0.002;
-                                    ctx.fillText(`${name} | Score: ${score} | HP: ${hp}`, playerX, playerY - 0.04);
-                                }
-                            }
-
-
 
                             ctx.restore();
                             this.texture2.needsUpdate = true;
